@@ -78,7 +78,7 @@ Basic, project to manage companies and their employees. Must be original work.
 - Companies DB table consists of these fields: Name (required), email, logo (minimum 100×100), website Employees DB table consists of these fields: First name (required), last name (required), Company (foreign key to Companies), email, phone Use database migrations to create those schemas above
 - Use database seeds to create at least 10 initial companies
 - Store companies logos in storage/app/public folder and make them accessible from public
-- Use basic Laravel resource controllers with default methods – index, create, store etc.
+- Use basic Laravel resource controllers with default methods – index, create, store, edit, update and destroy.
 - Use Laravel’s validation function, using Request classes
 - Use Laravel’s pagination for showing Companies/Employees list, 10 entries per page
 - Create authentication without using Laravel fortify.
