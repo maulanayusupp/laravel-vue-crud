@@ -66,7 +66,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 
-# LAREVEL DEVELOPER TEST
+# LARAVEL DEVELOPER TEST
 In order to progress in the job application, the company is asking programmers to
 complete a short test.
 There is no time limit involved and would prefer submission via a git repo.
