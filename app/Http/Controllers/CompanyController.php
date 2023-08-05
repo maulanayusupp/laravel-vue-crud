@@ -46,7 +46,7 @@ class CompanyController extends Controller
         // Sending email
         try {
             // Send the email notification to an email address (e.g., admin@example.com)
-            Notification::route('mail', 'admin@example.com')->notify(new NewCompanyNotification($company));
+            Notification::route('mail', 'maulanayusupp@gmail.com')->notify(new NewCompanyNotification($company));
         } catch (\Throwable $th) {
             //throw $th;
         }
