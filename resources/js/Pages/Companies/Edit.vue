@@ -11,7 +11,8 @@
         <div class="py-12">
             <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-8">
-                    <form @submit.prevent="submit">
+                    <form @submit.prevent="submit" enctype="multipart/form-data">
+
                         <div class="space-y-6">
                             <div>
                                 <InputLabel for="name" value="Name" />
@@ -44,7 +45,7 @@
                             </div>
 
                             <div>
-                                <input type="file" @change="onLogoChange" id="logo" />
+                                <input type="file" @input="onLogoChange" id="logo" />
                             </div>
                         </div>
 
@@ -88,14 +89,15 @@ export default {
                 name: this.company.name,
                 email: this.company.email,
                 logo: null,
+                _method: 'put',
             })
         };
     },
     methods: {
         submit() {
-            console.log('this.form', this.form)
-            this.form.put(route("companies.update", this.company.id), this.form, {
+            this.form.post(route("companies.update", this.company.id), this.form, {
                 preserveScroll: true,
+                forceFormData: true,
                 onSuccess: () => this.form.reset(),
                 onError: () => {
                     if (this.form.errors.name) {
@@ -109,7 +111,7 @@ export default {
         },
         onLogoChange(event) {
             this.form.logo = event.target.files[0];
-        }
+        },
     }
 };
 </script>

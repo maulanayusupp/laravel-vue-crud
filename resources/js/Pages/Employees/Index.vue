@@ -10,42 +10,42 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-end mb-6">
-                    <Link :href="route('companies.create')">
-                        <PrimaryButton>Create Company</PrimaryButton>
+                    <Link :href="route('employees.create')">
+                        <PrimaryButton>Create Employee</PrimaryButton>
                     </Link>
                 </div>
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <table class="w-full">
                         <tr>
                             <th class="text-white p-4 text-left">ID</th>
+                            <th class="text-white p-4 text-left">Company</th>
                             <th class="text-white p-4 text-left">Name</th>
                             <th class="text-white p-4 text-left">Email</th>
-                            <th class="text-white p-4">Logo</th>
+                            <th class="text-white p-4 text-left">Phone</th>
                             <th class="text-white p-4">Actions</th>
                         </tr>
-                        <tr v-for="company in companies.data" :key="company.id">
-                            <td class="text-white px-4 py-2">{{ company.id }}</td>
-                            <td class="text-white px-4 py-2">{{ company.name }}</td>
-                            <td class="text-white px-4 py-2">{{ company.email }}</td>
-                            <td class="text-white px-4 py-2 text-center">
-                                <img v-if="company.logo" :src="company.logo" alt="Company Logo" width="50" height="50" class="m-auto" />
-                            </td>
+                        <tr v-for="item in employees.data" :key="item.id">
+                            <td class="text-white px-4 py-2">{{ item.id }}</td>
+                            <td class="text-white px-4 py-2">{{ item.company.name || '' }}</td>
+                            <td class="text-white px-4 py-2">{{ item.first_name }} {{ item.last_name }}</td>
+                            <td class="text-white px-4 py-2">{{ item.email }}</td>
+                            <td class="text-white px-4 py-2">{{ item.phone }}</td>
                             <td class="text-white px-4 py-2 space-x-4 text-center">
-                                <Link :href="route('companies.show', company.id)">
+                                <Link :href="route('employees.show', item.id)">
                                     <PrimaryButton>Show</PrimaryButton>
                                 </Link>
-                                <Link :href="route('companies.edit', company.id)">
+                                <Link :href="route('employees.edit', item.id)">
                                     <PrimaryButton>Edit</PrimaryButton>
                                 </Link>
-                                <PrimaryButton @click="deleteCompany(company)">Delete</PrimaryButton>
+                                <PrimaryButton @click="deleteItem(item)">Delete</PrimaryButton>
                             </td>
                         </tr>
                     </table>
                 </div>
 
                 <div>
-                    <Link v-if="companies.prev_page_url" :href="companies.prev_page_url">Previous</Link>
-                    <Link v-if="companies.next_page_url" :href="companies.next_page_url">Next</Link>
+                    <Link v-if="employees.prev_page_url" :href="employees.prev_page_url">Previous</Link>
+                    <Link v-if="employees.next_page_url" :href="employees.next_page_url">Next</Link>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@ export default {
         PrimaryButton,
     },
     props: {
-        companies: Object
+        employees: Object
     },
     data() {
         return {
@@ -77,8 +77,8 @@ export default {
     mounted() {
     },
     methods: {
-        deleteCompany(item){
-            this.form.delete(route('companies.destroy', item.id), {
+        deleteItem(item){
+            this.form.delete(route('employees.destroy', item.id), {
                 preserveScroll: true,
                 onSuccess: () => {},
                 onError: () => {},

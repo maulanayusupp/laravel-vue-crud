@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Company\{StoreRequest, UpdateRequest};
 use App\Models\Company;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
+use App\Notifications\NewCompanyNotification;
+use Illuminate\Support\Facades\Notification;
 
 class CompanyController extends Controller
 {
@@ -14,7 +17,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::paginate(10);
+        $companies = Company::orderBy('created_at', 'desc')->paginate(30);
         return Inertia::render('Companies/Index', compact('companies'));
     }
 
@@ -38,7 +41,16 @@ class CompanyController extends Controller
             $data['logo'] = env('APP_URL').'/storage/'.$logoPath;
         }
 
-        Company::create($data);
+        $company = Company::create($data);
+
+        // Sending email
+        try {
+            // Send the email notification to an email address (e.g., admin@example.com)
+            Notification::route('mail', 'admin@example.com')->notify(new NewCompanyNotification($company));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
         return redirect()->route('companies.index')->with('success', 'Company created successfully.');
     }
 
